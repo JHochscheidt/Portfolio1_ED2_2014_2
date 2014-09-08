@@ -23,7 +23,7 @@
 	
 	/* ******************************************************************* */
 
-char geradorDeSeparador(){
+char *geradorDeSeparador(char *texto){
 	int teste = rand() % 4;
 	char c;
 	
@@ -32,8 +32,9 @@ char geradorDeSeparador(){
 	else if(teste == 2) c = (char) nChar91 + (rand() % (nChar96 + 1 - nChar91)); // separadores de 91 a 96
 	else 				c = (char) nChar123 + (rand() % (nChar255 + 1 - nChar123)); // separadores de 123 a 255
 	
+	strncat(texto,&c,1);
 	//printf("\n separador %c  \n", c );
-	return c;
+	return texto;
 }
 
 char *geradorDePalavra(int tamanhoW ,char *texto){

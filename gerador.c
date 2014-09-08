@@ -33,17 +33,58 @@ int main(int argv , char **argc){
 	
 	if(nameArchive != NULL)	printf("\t nameArchive --> %s \n", nameArchive);
 		
-	int tamanhoW = (maxW + minW) / 2;
-	printf("TAMANHO DAS PALAVRAS %d", tamanhoW);
-	
-	if(sizeFile < numWords || minW > maxW || tamanhoW * numWords + numWords > sizeFile)
+	if(sizeFile < numWords || sizeFile < numWords * minW + numWords || minW > maxW)
 		return 1; //retorna 1 parametros passados de forma errada
 		
+				
 	FILE *arquivo = fopen(nameArchive, "w+");
 	fclose(arquivo);
-	//if(arquivo)	printf("\n \tARQUIVO CRIADO COM SUCESSO \n\n");
-	//else printf("ERRO NA CRIACAO DO ARQUIVO");
+	if(arquivo)	printf("\n \tARQUIVO CRIADO COM SUCESSO \n\n");
+	else{
+		 printf("ERRO NA CRIACAO DO ARQUIVO");
+		 return 1;
+	}
 	
+	
+	int sizeFileTemp = 0;
+	int tamanhoMaxWord = 0;
+	int tamanhoWord = 0;
+	
+	char *texto = (char*) malloc(sizeFile);
+	
+	int contLaco = 0;
+	
+	arquivo = fopen(nameArchive, "a+");
+	
+	while(sizeFile > sizeFileTemp && numWords > 0){
+		tamanhoMaxWord = (sizeFile - sizeFileTemp) / (numWords * 2);
+		printf("TAMANHO MAX WORD %d \n", tamanhoMaxWord);
+		if(tamanhoMaxWord >= maxW){
+			tamanhoMaxWord = maxW;
+		}
+		tamanhoWord = minW + (rand() % (tamanhoMaxWord - minW));
+		printf("TAMANHO DA WORD %d \n", tamanhoWord);
+		texto = geradorDePalavra(tamanhoWord, texto);
+		sizeFileTemp = sizeFileTemp + tamanhoWord;
+		if(sizeFileTemp < sizeFile && numWords > 0){
+			texto = geradorDeSeparador(texto);
+			sizeFileTemp++;
+		}
+		printf("cont laco %d", contLaco);
+		contLaco++;			
+		numWords--;
+		if(numWords == 0 && sizeFile > sizeFileTemp){
+			while(sizeFile > sizeFileTemp){
+				texto = geradorDeSeparador(texto);
+				printf("laco separador %d", sizeFileTemp);
+				sizeFileTemp++;
+			}
+		}
+		printf("texto gerado a cada laco %s \n\n", texto);
+	}
+	fprintf(arquivo, "%s", texto);
+	printf("texto gerado %s \n", texto);
+	fclose(arquivo);
 	
 	
 	
