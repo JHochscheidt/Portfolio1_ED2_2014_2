@@ -39,13 +39,18 @@ int main(int argv , char **argc){
 	unsigned int sizeFileTemp = 0;
 	int tamanhoMaxWord = 0;
 	int tamanhoWord = 0;
+	//int tamMalloc = numWords * 2 * maxW	;
+	char *texto  = (char*) malloc(sizeFile);
 	
-	char *texto = (char*) malloc(sizeFile);
+	if(!texto){
+		printf("fia da puuuuuuu");
+		return 1;
+	}
 	
 	int contLaco = 0;
-	arquivo = fopen(nameArchive, "a+");
+	arquivo = fopen(nameArchive, "w+");
 	while(sizeFile > sizeFileTemp && numWords > 0){
-		//printf("cont laco %d \n", contLaco);
+		printf("cont laco %d \n", contLaco);
 		contLaco++;
 		tamanhoMaxWord = (sizeFile - sizeFileTemp) / (numWords * 2);
 		if(tamanhoMaxWord >= maxW){
@@ -58,17 +63,23 @@ int main(int argv , char **argc){
 		sizeFileTemp = sizeFileTemp + tamanhoWord;
 		//printf("temporario \t %d \n", sizeFileTemp);
 		if(sizeFileTemp < sizeFile){
-			texto = geradorDeSeparador(1 ,texto);
+			texto = geradorDeSeparador(1,texto);
 			sizeFileTemp = sizeFileTemp + 1;
 		}		
-		if(numWords == 0 && sizeFile > sizeFileTemp){
-			printf("aisdjuaoisdjfhaoikfalkdkljsa");
-			int quantSeparadores = sizeFile - sizeFileTemp;
-			texto = geradorDeSeparador(quantSeparadores,texto);
-		}		
+		fscanf(arquivo, "%s", texto);
 	}
-	printf("texto gerado %s \n", texto);
-	fprintf(arquivo, "%s", texto);
+	
+	printf("saiu do laco");
+	
+	
+	if(numWords == 0 && sizeFile > sizeFileTemp){
+		int quantSeparadores = sizeFile - sizeFileTemp;
+		char *separadores = (char*) malloc(quantSeparadores);
+		printf("aisdjuaoisdjfhaoikfalkdkljsa");
+		separadores = geradorDeSeparador(quantSeparadores,texto);
+		fscanf(arquivo, "%s", separadores);
+	}
+	//printf("texto gerado %s \n", texto);
 	fclose(arquivo);
 		
 	return 0;
