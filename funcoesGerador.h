@@ -5,14 +5,14 @@
 	/*
 	 * Funcao que gera uma palavra de : minW ate maxW caracteres com o tamanhoW
 	 */
-	char *geradorDePalavra(int tamanhoW ,char *texto);
+	char *geradorDePalavra(int tamanhoW);
 	
 		
 	
 	/*
 	 * Funcao que gera um separador de palavras
 	 */
-	char *geradorDeSeparador(unsigned int quant, char *texto);
+	char *geradorDeSeparador();
 	
 	
 	
