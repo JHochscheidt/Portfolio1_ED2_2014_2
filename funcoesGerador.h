@@ -12,7 +12,7 @@
 	/*
 	 * Funcao que gera um separador de palavras
 	 */
-	char *geradorDeSeparador(char *texto);
+	char *geradorDeSeparador(unsigned int quant, char *texto);
 	
 	
 	

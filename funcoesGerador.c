@@ -5,7 +5,7 @@
 #include <time.h>
 
 	/* definicao de constantes para caracteres e separadores tabela ascII */
-		#define nChar0 0
+		#define nChar32 32
 		#define nChar47 47
 		#define zeroASCII 48
 		#define noveASCII 57
@@ -18,22 +18,23 @@
 		#define aASCII 97
 		#define zASCII 122	
 		#define nChar123 123
-		#define nChar255 255
-		#define tableASCII 256
+		#define nChar126 126
 	
 	/* ******************************************************************* */
 
-char *geradorDeSeparador(char *texto){
-	int teste = rand() % 4;
+char *geradorDeSeparador(unsigned int quant, char *texto){
+	int teste;
+	
 	char c;
-	
-	if(teste == 0) 		c = (char) rand() % (nChar47 + 1) ; // separadores de 0 a 47
-	else if(teste == 1)	c = (char) nChar58 + (rand() % (nChar64 + 1 - nChar58)); // separadores de 58 a 64
-	else if(teste == 2) c = (char) nChar91 + (rand() % (nChar96 + 1 - nChar91)); // separadores de 91 a 96
-	else 				c = (char) nChar123 + (rand() % (nChar255 + 1 - nChar123)); // separadores de 123 a 255
-	
-	strncat(texto,&c,1);
-	//printf("\n separador %c  \n", c );
+	while(quant > 0){
+		teste = rand() % 4;
+		if(teste == 0) 		c = (char) (nChar32 + (rand() % (nChar47 + 1 - nChar32))) ; // separadores de 32 a 47
+		else if(teste == 1)	c = (char) (nChar58 + (rand() % (nChar64 + 1 - nChar58))); // separadores de 58 a 64
+		else if(teste == 2) c = (char) (nChar91 + (rand() % (nChar96 + 1 - nChar91))); // separadores de 91 a 96
+		else 				c = (char) (nChar123 + (rand() % (nChar126 + 1 - nChar123))); // separadores de 123 a 255
+		strncat(texto,&c,1);
+		quant--;
+	}
 	return texto;
 }
 
