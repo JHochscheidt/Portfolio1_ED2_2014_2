@@ -4,7 +4,7 @@
 	/*
 	 * Funcao que gera um separador de palavras
 	 */
-	void geradorDeSeparador(unsigned int quant, char *separador);
+	char *geradorDeSeparador();
 	
 
 	/*

@@ -26,7 +26,8 @@ int main(int argv , char **argc){
 	if(sizeFile < numWords || sizeFile < numWords * 2 * minW || minW > maxW)
 		return 1; //retorna 1 parametros passados de forma errada
 		
-				
+	srand(time(NULL)); // gera "semente" de acordo com a hora atual em segundos
+			
 	FILE *arquivo = fopen(nameArchive, "w+");
 	fclose(arquivo);
 	if(arquivo)	printf("\n \tARQUIVO CRIADO COM SUCESSO \n\n");
@@ -34,13 +35,13 @@ int main(int argv , char **argc){
 		 printf("ERRO NA CRIACAO DO ARQUIVO");
 		 return 1;
 	}
-	srand(time(NULL)); // gera "semente" de acordo com a hora atual em segundos
-	unsigned int sizeFileTemp = 0;
+	
+	int sizeFileTemp = 0;
 	int tamanhoMaxWord = 0;
 	int tamanhoWord = 0;
-	char *texto  =  (char*) malloc(maxW);
-	char *separador = (char*) malloc(1);
-	if(!texto || !separador) return 1;
+	char *texto  =  (char*) malloc(sizeFile);
+		
+	if(!texto) return 1;
 	
 	arquivo = fopen(nameArchive, "a+");
 	while(sizeFile > sizeFileTemp && numWords > 0){
@@ -50,27 +51,27 @@ int main(int argv , char **argc){
 		}
 		tamanhoWord = minW + (rand() % (tamanhoMaxWord - minW));
 		texto = geradorDePalavra(tamanhoWord);
+		//printf("TEXTO %s",texto);
 		fputs(texto,arquivo);
 		numWords--;
 		sizeFileTemp += tamanhoWord;
 		if(sizeFileTemp < sizeFile){
-			geradorDeSeparador(1, separador);
-			fputs(separador,arquivo);
+			texto = geradorDeSeparador(1);
+			//printf("SEPARADOR %s",texto);
+			fputs(texto,arquivo);
 			sizeFileTemp++;
 		}
-		
 		if(numWords == 0 && sizeFile > sizeFileTemp){
 			int quantSeparadores = sizeFile - sizeFileTemp;
 			while(quantSeparadores > 0){
-				puts("satanas\n");
-				geradorDeSeparador(1, separador);
-				fputs(separador,arquivo);
+				texto = geradorDeSeparador();
+				//printf("WHILE %s",texto);
 				quantSeparadores--;
+				fputs(texto,arquivo);
 			}
+			
 		}
-		
 	}
 	fclose(arquivo);	
-		
 	return 0;
 }
