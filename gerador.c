@@ -38,8 +38,9 @@ int main(int argv , char **argc){
 	unsigned int sizeFileTemp = 0;
 	int tamanhoMaxWord = 0;
 	int tamanhoWord = 0;
-	
-	char *texto  = (char*) malloc(1);
+	char *texto  =  (char*) malloc(maxW);
+	char *separador = (char*) malloc(1);
+	if(!texto || !separador) return 1;
 	
 	arquivo = fopen(nameArchive, "a+");
 	while(sizeFile > sizeFileTemp && numWords > 0){
@@ -50,21 +51,22 @@ int main(int argv , char **argc){
 		tamanhoWord = minW + (rand() % (tamanhoMaxWord - minW));
 		texto = geradorDePalavra(tamanhoWord);
 		fputs(texto,arquivo);
-		numWords--;	
+		numWords--;
 		sizeFileTemp += tamanhoWord;
 		if(sizeFileTemp < sizeFile){
-			texto = geradorDeSeparador(1);
-			fputs(texto,arquivo);
+			geradorDeSeparador(1, separador);
+			fputs(separador,arquivo);
 			sizeFileTemp++;
-		}		
+		}
+		
 		if(numWords == 0 && sizeFile > sizeFileTemp){
 			int quantSeparadores = sizeFile - sizeFileTemp;
 			while(quantSeparadores > 0){
-				texto = geradorDeSeparador();
+				puts("satanas\n");
+				geradorDeSeparador(1, separador);
+				fputs(separador,arquivo);
 				quantSeparadores--;
-				fputs(texto,arquivo);
 			}
-			
 		}
 		
 	}
