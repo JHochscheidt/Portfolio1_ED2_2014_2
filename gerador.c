@@ -23,9 +23,10 @@ int main(int argv , char **argc){
 	
 	if(nameArchive != NULL)	printf("\t nameArchive --> %s \n", nameArchive);
 		
-	if(sizeFile < numWords || sizeFile < numWords * 2 * minW || minW > maxW)
+	if(sizeFile < numWords || sizeFile < numWords * 2 * minW || minW > maxW){
+		printf("parametros errados");
 		return 1; //retorna 1 parametros passados de forma errada
-		
+	}
 	srand(time(NULL)); // gera "semente" de acordo com a hora atual em segundos
 			
 	FILE *arquivo = fopen(nameArchive, "w+");
@@ -50,11 +51,12 @@ int main(int argv , char **argc){
 			tamanhoMaxWord = maxW;
 		}
 		tamanhoWord = minW + (rand() % (tamanhoMaxWord - minW));
+		sizeFileTemp = sizeFileTemp + tamanhoWord;
 		texto = geradorDePalavra(tamanhoWord);
 		//printf("TEXTO %s",texto);
 		fputs(texto,arquivo);
 		numWords--;
-		sizeFileTemp += tamanhoWord;
+		
 		if(sizeFileTemp < sizeFile){
 			texto = geradorDeSeparador(1);
 			//printf("SEPARADOR %s",texto);
