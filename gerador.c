@@ -40,7 +40,7 @@ int main(int argv , char **argc){
 	int sizeFileTemp = 0;
 	int tamanhoMaxWord = 0;
 	int tamanhoWord = 0;
-	char *texto  =  (char*) malloc(sizeFile);
+	char *texto  =  (char*) malloc(1);
 		
 	if(!texto) return 1;
 	
